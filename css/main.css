@@ -1003,9 +1003,12 @@ body {
   gap: 10px;
   padding: 0 10px;
 }
-.project-section .project-modal .project-content .right .project-buttons a.btn {
+.project-section .project-modal .project-content .right .project-buttons a.btn,
+.project-section .project-modal .project-content .right .project-buttons button.btn {
+  font-family: "Paperlogy", sans-serif;
   flex: 1 1 calc(33.33% - 50px);
   background-color: #2f80ed;
+  font-size: 16px;
   color: #fff;
   border: none;
   padding: 10px 10px;
@@ -1014,7 +1017,8 @@ body {
   text-align: center;
   transition: 0.3s;
 }
-.project-section .project-modal .project-content .right .project-buttons a.btn:hover {
+.project-section .project-modal .project-content .right .project-buttons a.btn:hover,
+.project-section .project-modal .project-content .right .project-buttons button.btn:hover {
   background-color: #1565c0;
 }
 .project-section .project-title {
@@ -1068,6 +1072,117 @@ body {
 .project-section .arrow img {
   width: 40px;
   height: 40px;
+}
+.project-section .code-modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 10000;
+  justify-content: center;
+  align-items: center;
+}
+.project-section .code-modal {
+  background: #fff;
+  width: 80%;
+  max-width: 1000px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+}
+.project-section .code-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #2B8DDD;
+  color: #fff;
+  padding: 15px 20px;
+}
+.project-section .code-close-btn {
+  background: none;
+  border: none;
+  font-size: 35px;
+  color: #fff;
+  cursor: pointer;
+}
+.project-section .code-tabs {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+}
+.project-section .code-tab {
+  flex: 1;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  background: #f5f5f5;
+  transition: 0.3s;
+  font-size: 16px;
+}
+.project-section .code-tab.active {
+  background: #fff;
+  border-bottom: 3px solid #2B8DDD;
+  font-weight: bold;
+}
+.project-section .code-tab-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: none;
+}
+.project-section .code-tab-content h3 {
+  margin-bottom: 20px;
+}
+.project-section .code-tab-content.active {
+  display: block;
+}
+.project-section .code-tab-content img {
+  display: block;
+  max-width: 60%;
+  height: auto;
+  margin: 10px;
+  border: 1px solid #ddd;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.project-section .code-tab-content .big-img {
+  max-width: 90%;
+}
+.project-section .code-tab-content .first {
+  margin-top: 50px;
+}
+.project-section .code-desc {
+  font-size: 18px;
+  color: #222;
+  line-height: 1.4;
+  margin-left: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.project-section .login-section,
+.project-section .signup-section {
+  margin-bottom: 40px;
+}
+.project-section .login-section h3,
+.project-section .signup-section h3 {
+  margin-bottom: 20px;
+}
+.project-section .divider {
+  border-bottom: 2px dashed #2B8DDD;
+  margin: 40px 0;
+}
+.project-section .qna-section,
+.project-section .review-section {
+  margin-bottom: 40px;
+}
+.project-section .qna-section h3,
+.project-section .review-section h3 {
+  margin-bottom: 20px;
 }
 
 .gallery-section {

@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-
   // ===== 인트로 =====
   const subtitle = document.querySelector(".subtitle");
   const mainTitle = document.querySelector(".main-title");
@@ -24,16 +23,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ===== 프로필 탭 =====
   const ARROW_GRAY = './images/arrow-gray.png';
-  const ARROW_RED = './images/arrow-red.png'; 
-
+  const ARROW_RED = './images/arrow-red.png';
   const tabs = Array.from(document.querySelectorAll('.tab'));
   const panels = Array.from(document.querySelectorAll('.tab-panel'));
 
-
   function bindPanel(panel) {
-    if (!panel) return;
-    if (panel.dataset.bound === 'true') return; 
-
+    if (!panel || panel.dataset.bound === 'true') return;
     const lis = Array.from(panel.querySelectorAll('li'));
     if (!lis.length) return;
 
@@ -47,7 +42,6 @@ document.addEventListener("DOMContentLoaded", () => {
         setActiveIndex(panel, idx);
       });
     });
-
     panel.dataset.bound = 'true';
   }
 
@@ -55,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const lis = Array.from(panel.querySelectorAll('li'));
     if (!lis.length) return;
     const newIndex = Math.max(0, Math.min(idx, lis.length - 1));
-
     lis.forEach((li, i) => {
       const img = li.querySelector('img.arrow');
       if (i === newIndex) {
@@ -66,7 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (img) img.src = ARROW_GRAY;
       }
     });
-
     panel.dataset.activeIndex = String(newIndex);
   }
 
@@ -80,20 +72,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const tabId = tab.dataset.tab;
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-
       panels.forEach(p => p.classList.remove('active'));
       const target = document.querySelector(`#tab-${tabId}`);
       if (!target) return;
       target.classList.add('active');
-
-
       bindPanel(target);
-      setActiveIndex(target, 0); 
+      setActiveIndex(target, 0);
     });
   });
 
   // ===== 스킬 =====
-
   const skillSection = document.querySelector(".section.skills");
   const skillBox = document.querySelector(".skill-box");
 
@@ -102,7 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           skillBox.classList.add("active");
-
           setTimeout(() => {
             skillBox.classList.add("show-items");
             const items = skillBox.querySelectorAll(".skill-item");
@@ -110,82 +97,95 @@ document.addEventListener("DOMContentLoaded", () => {
               item.style.transitionDelay = `${i * 0.15}s`;
             });
           }, 800);
-
           observer.unobserve(skillSection);
         }
       });
     }, { threshold: 0.3 });
-
     observer.observe(skillSection);
   }
 
-  // ===== 프로젝트  =====
-
-const wrappers = document.querySelectorAll(".image-wrapper");
-
-wrappers.forEach(wrapper => {
-  const video = wrapper.querySelector("video");
-
-  wrapper.addEventListener("mouseenter", () => {
-    video.play();
+  // ===== 프로젝트 =====
+  const wrappers = document.querySelectorAll(".image-wrapper");
+  wrappers.forEach(wrapper => {
+    const video = wrapper.querySelector("video");
+    if (!video) return;
+    wrapper.addEventListener("mouseenter", () => {
+      video.play().catch(() => {});
+    });
+    wrapper.addEventListener("mouseleave", () => {
+      video.pause();
+      video.currentTime = 0;
+    });
   });
 
-  wrapper.addEventListener("mouseleave", () => {
-    video.pause();
-    video.currentTime = 0;
-  });
-});
+  // ===== 코드 모달 + 탭 =====
+  const modalOverlay = document.querySelector(".code-modal-overlay");
+  const codeCloseBtn = document.querySelector(".code-close-btn");
+  const codeBtns = document.querySelectorAll(".btn-code");
+  const tabs2 = document.querySelectorAll(".code-tab");
+  const contents = document.querySelectorAll(".code-tab-content");
 
-const modal = document.querySelector(".project-modal");
-const pagination = document.querySelector(".pagination");
+  function openCodeModal(defaultTabIndex = 0) {
+    if (!modalOverlay) return;
+    modalOverlay.style.display = "flex";
+    document.body.style.overflow = "hidden";
 
+    if (typeof fullpage_api !== "undefined") {
+      fullpage_api.setAutoScrolling(false);
+    }
 
-function setPaginationPosition() {
-  if (!modal || !pagination) return;
-
-  if (pagination.offsetWidth === 0 || pagination.offsetHeight === 0) {
-    pagination.style.minWidth = "100px";
-    pagination.style.minHeight = "12px";
-  }
-
-  pagination.style.position = "fixed";      
-  pagination.style.bottom = "20px";        
-  pagination.style.left = "50%";            
-  pagination.style.transform = "translateX(-50%)";
-  pagination.style.zIndex = 9999;           
-  pagination.style.display = "flex";       
-  pagination.style.opacity = 1;          
-}
-
-const projectSwiper = new Swiper('.project-swiper', {
-  slidesPerView: 1,
-  spaceBetween: 30,
-  loop: true,
-  pagination: {
-    el: '.pagination',
-    clickable: true,
-  },
-  navigation: {
-    nextEl: '.right-arrow',
-    prevEl: '.left-arrow',
-  },
-  on: {
-    init: function () {
-      setTimeout(() => setPaginationPosition(), 50);
-    },
-    slideChange: function () {
-      setPaginationPosition();
-    },
-    resize: function () {
-      setPaginationPosition();
+    const defaultTab = tabs2[defaultTabIndex] || tabs2[0];
+    if (defaultTab) {
+      tabs2.forEach(t => t.classList.remove("active"));
+      contents.forEach(c => c.classList.remove("active"));
+      defaultTab.classList.add("active");
+      const target = defaultTab.getAttribute("data-tab");
+      const el = document.getElementById(target);
+      if (el) el.classList.add("active");
+      if (codeCloseBtn) codeCloseBtn.focus();
     }
   }
-});
 
-window.addEventListener("load", () => setTimeout(setPaginationPosition, 50));
-window.addEventListener("resize", setPaginationPosition);
-window.addEventListener("scroll", setPaginationPosition);
+  function closeCodeModal() {
+    if (!modalOverlay) return;
+    modalOverlay.style.display = "none";
+    document.body.style.overflow = "";
 
+    if (typeof fullpage_api !== "undefined") {
+      fullpage_api.setAutoScrolling(true);
+    }
+  }
+
+  if (codeBtns.length > 0) {
+    codeBtns.forEach(btn => {
+      btn.addEventListener("click", e => {
+        e.preventDefault();
+        openCodeModal(0);
+      });
+    });
+  }
+  if (codeCloseBtn) codeCloseBtn.addEventListener("click", closeCodeModal);
+  if (modalOverlay) {
+    modalOverlay.addEventListener("click", e => {
+      if (e.target === modalOverlay) closeCodeModal();
+    });
+  }
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") closeCodeModal();
+  });
+
+  if (tabs2.length > 0) {
+    tabs2.forEach(tab => {
+      tab.addEventListener("click", () => {
+        tabs2.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        const targetId = tab.getAttribute("data-tab");
+        contents.forEach(c => c.classList.remove("active"));
+        const targetEl = document.getElementById(targetId);
+        if (targetEl) targetEl.classList.add("active");
+      });
+    });
+  }
 
   // ===== 갤러리 =====
   const pages = document.querySelectorAll(".gallery-page");
@@ -208,8 +208,8 @@ window.addEventListener("scroll", setPaginationPosition);
     currentIndex = (currentIndex - 1 + pages.length) % pages.length;
     showPage(currentIndex);
   }
-  nextBtn.addEventListener("click", nextPage);
-  prevBtn.addEventListener("click", prevPage);
+  if (nextBtn) nextBtn.addEventListener("click", nextPage);
+  if (prevBtn) prevBtn.addEventListener("click", prevPage);
   dots2.forEach((dot, i) => {
     dot.addEventListener("click", () => {
       currentIndex = i;
@@ -218,131 +218,119 @@ window.addEventListener("scroll", setPaginationPosition);
   });
   showPage(currentIndex);
 
-
-
   // ===== 컨택트 =====
-const line1 = document.querySelector('.contact-text .line1');
-const dots3 = document.querySelector('.contact-text .dots');
-const line2 = document.querySelector('.contact-text .line2');
-const blinkingArrow = document.querySelector('.contact-text .blinking-arrow');
-const character = document.querySelector('.character');
-const messageBox = document.querySelector('.message-box');
-const messageContainer = document.querySelector('.message-container');
+  const line1 = document.querySelector('.contact-text .line1');
+  const dots3 = document.querySelector('.contact-text .dots');
+  const line2 = document.querySelector('.contact-text .line2');
+  const blinkingArrow = document.querySelector('.contact-text .blinking-arrow');
+  const character = document.querySelector('.character');
+  const messageBox = document.querySelector('.message-box');
+  const messageContainer = document.querySelector('.message-container');
 
-
-function typeText(text, parent, speed = 50, callback) {
-  let i = 0;
-  function nextChar() {
-    if (i >= text.length) {
-      if (callback) callback();
-      return;
-    }
-    parent.append(text[i]);
-    i++;
-    setTimeout(nextChar, speed);
-  }
-  nextChar();
-}
-
-function typeHTML(element, speed = 50, callback) {
-  const nodes = Array.from(element.childNodes); 
-  element.innerHTML = '';
-  element.style.opacity = 1;
-
-  let i = 0;
-
-  function nextNode() {
-    if (i >= nodes.length) {
-      if (callback) callback();
-      return;
-    }
-
-    const node = nodes[i];
-
-    if (node.nodeType === Node.TEXT_NODE) {
-      typeText(node.textContent, element, speed, () => {
-        i++;
-        nextNode();
-      });
-    } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'SPAN') {
-      const span = node;
-      const text = span.textContent;
-      span.textContent = '';
-      element.appendChild(span); 
-      typeText(text, span, speed, () => {
-        i++;
-        nextNode();
-      });
-    } else {
-      element.appendChild(node.cloneNode(true));
+  function typeText(text, parent, speed = 50, callback) {
+    let i = 0;
+    function nextChar() {
+      if (i >= text.length) {
+        if (callback) callback();
+        return;
+      }
+      parent.append(text[i]);
       i++;
-      nextNode();
+      setTimeout(nextChar, speed);
     }
+    nextChar();
   }
 
-  nextNode();
-}
+  function typeHTML(element, speed = 50, callback) {
+    const nodes = Array.from(element.childNodes);
+    element.innerHTML = '';
+    element.style.opacity = 1;
+    let i = 0;
+    function nextNode() {
+      if (i >= nodes.length) {
+        if (callback) callback();
+        return;
+      }
+      const node = nodes[i];
+      if (node.nodeType === Node.TEXT_NODE) {
+        typeText(node.textContent, element, speed, () => {
+          i++;
+          nextNode();
+        });
+      } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'SPAN') {
+        const span = node;
+        const text = span.textContent;
+        span.textContent = '';
+        element.appendChild(span);
+        typeText(text, span, speed, () => {
+          i++;
+          nextNode();
+        });
+      } else {
+        element.appendChild(node.cloneNode(true));
+        i++;
+        nextNode();
+      }
+    }
+    nextNode();
+  }
 
-function typeDots(element, speed = 200, repeat = 3, callback) {
-  let count = 0;
-  element.style.opacity = 1;
-  const timer = setInterval(() => {
-    element.textContent = '.'.repeat(count % (repeat + 1));
-    count++;
-  }, speed);
+  function typeDots(element, speed = 200, repeat = 3, callback) {
+    let count = 0;
+    element.style.opacity = 1;
+    const timer = setInterval(() => {
+      element.textContent = '.'.repeat(count % (repeat + 1));
+      count++;
+    }, speed);
+    setTimeout(() => {
+      clearInterval(timer);
+      element.textContent = '...';
+      if (callback) callback();
+    }, speed * (repeat + 1) * 2);
+  }
 
-  setTimeout(() => {
-    clearInterval(timer);
-    element.textContent = '...';
-    if (callback) callback();
-  }, speed * (repeat + 1) * 2);
-}
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting && entry.target.classList.contains("contact")) {
-      typeHTML(line1, 50, () => {
-        typeDots(dots3, 250, 3, () => {
-          typeHTML(line2, 50, () => {
-            character.style.opacity = 1;
-            messageBox.style.opacity = 1;
-
-            blinkingArrow.style.opacity = 1;
-
-            const hoverText = messageContainer.querySelector('.hover-text');
-            messageContainer.addEventListener('mouseenter', () => {
-              hoverText.classList.add('hover-floating');
-            });
-            messageContainer.addEventListener('mouseleave', () => {
-              hoverText.classList.remove('hover-floating');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && entry.target.classList.contains("contact")) {
+        typeHTML(line1, 50, () => {
+          typeDots(dots3, 250, 3, () => {
+            typeHTML(line2, 50, () => {
+              character.style.opacity = 1;
+              messageBox.style.opacity = 1;
+              blinkingArrow.style.opacity = 1;
+              const hoverText = messageContainer.querySelector('.hover-text');
+              messageContainer.addEventListener('mouseenter', () => {
+                hoverText.classList.add('hover-floating');
+              });
+              messageContainer.addEventListener('mouseleave', () => {
+                hoverText.classList.remove('hover-floating');
+              });
             });
           });
         });
-      });
 
-      const fpWatermark = document.querySelector('.fp-watermark');
-      if (fpWatermark) fpWatermark.remove();
+        const fpWatermark = document.querySelector('.fp-watermark');
+        if (fpWatermark) fpWatermark.remove();
 
-      observer.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.2 });
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
 
-observer.observe(document.querySelector(".contact"));
+  observer.observe(document.querySelector(".contact"));
+});
 
-
-  });
-
-// ===== fullPage.js =====
+// ===== fullPage.js  =====
 new fullpage('#fullpage', {
   licenseKey: 'gplv3-license',
   autoScrolling: true,
-  navigation: false, 
+  navigation: false,
   anchors: ['page1', 'page2', 'page3', 'page4', 'page5', 'page6'],
   scrollOverflow: false,
   fitToSection: true,
   scrollingSpeed: 700,
-  afterLoad: function (origin, destination, direction) {
+  credits: { enabled: false },
+  afterLoad: function (origin, destination) {
     const items = document.querySelectorAll(".side-nav .nav-item");
     items.forEach((item, i) => {
       const heart = item.querySelector(".heart");
@@ -350,8 +338,8 @@ new fullpage('#fullpage', {
       heart.classList.toggle("tilt", destination.index === i);
     });
   },
-  afterRender: function () { 
-    const wm = document.getElementById("fp-watermark");
+  afterRender: function () {
+    const wm = document.querySelector(".fp-watermark");
     if (wm) wm.remove();
   }
 });
@@ -362,4 +350,3 @@ document.querySelectorAll(".side-nav .heart").forEach((h, i) => {
     fullpage_api.moveTo(i + 1);
   });
 });
-

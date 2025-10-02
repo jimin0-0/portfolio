@@ -538,7 +538,7 @@
                   <div class="project-buttons">
                     <a href="./file/purea.pdf" target="_blank" class="btn">기획서 보러가기</a>
                     <a href="./file/purea-img.pdf" target="_blank" class="btn">피그마 보러가기</a>
-                    <a href="https://github.com/jimin0-0/purea" target="_blank" class="btn">코드 보러가기</a>
+                    <button class="btn btn-code">코드 보러가기</button>
                     <a href="https://jimin0-0.github.io/purea/" target="_blank" class="btn">PC 사이트 보러가기</a>
                     <a href="https://jimin0-0.github.io/purea_mobile/" target="_blank" class="btn">모바일 사이트 보러가기</a>
                   </div>
@@ -622,7 +622,7 @@
                   <div class="project-buttons">
                     <a href="./file/myrealtrip-ppt.pdf" target="_blank" class="btn">기획서 보러가기</a>
                     <a href="./file/myrealtrip-img.pdf" target="_blank" class="btn">피그마 보러가기</a>
-                    <a href="https://github.com/jimin0-0/myrealtrip" target="_blank" class="btn">코드 보러가기</a>
+                    <button class="btn btn-code">코드 보러가기</button>
                     <a href="https://jimin0-0.github.io/myrealtrip/" target="_blank" class="btn">사이트 보러가기</a>
                   </div>
 
@@ -697,7 +697,7 @@
                   <div class="project-buttons">
                     <a href="./file/React_Project_modeuldam.pdf" target="_blank" class="btn">기획서 보러가기</a>
                     <a href="./file/modeuldam_img.pdf" target="_blank" class="btn">피그마 보러가기</a>
-                    <a href="https://github.com/jimin0-0/modeuldam" target="_blank" class="btn">코드 보러가기</a>
+                    <button class="btn btn-code">코드 보러가기</button>
                     <a href="https://jimin0-0.github.io/modeuldam/" target="_blank" class="btn">사이트 보러가기</a>
                   </div>
 
@@ -772,7 +772,7 @@
                   <div class="project-buttons">
                     <a href="./file/waffle-univ.pdf" target="_blank" class="btn">기획서 보러가기</a>
                     <a href="./file/waffle-univ-img.pdf" target="_blank" class="btn">피그마 보러가기</a>
-                    <a href="https://github.com/jimin0-0/waffle-univ" target="_blank" class="btn">코드 보러가기</a>
+                    <button class="btn btn-code">코드 보러가기</button>
                     <a href="https://jimin0-0.github.io/waffle-univ/" target="_blank" class="btn">사이트 보러가기</a>
                   </div>
 
@@ -847,7 +847,7 @@
                   <div class="project-buttons">
                     <a href="./file/nongshim.pdf" target="_blank" class="btn">기획서 보러가기</a>
                     <a href="./file/nongshim-img.pdf" target="_blank" class="btn">피그마 보러가기</a>
-                    <a href="https://github.com/jimin0-0/nongshim" target="_blank" class="btn">코드 보러가기</a>
+                    <button class="btn btn-code">코드 보러가기</button>
                     <a href="https://jimin0-0.github.io/nongshim/" target="_blank" class="btn">사이트 보러가기</a>
                   </div>
 
@@ -871,7 +871,119 @@
       </div>
 
       <div class="pagination"></div>
+
+
+
+      <div class="code-modal-overlay">
+        <div class="code-modal">
+          <div class="code-modal-header">
+            <h2>코드 보기</h2>
+            <button class="code-close-btn">&times;</button>
+          </div>
+
+          <div class="code-tabs">
+            <button class="code-tab active" data-tab="swiper">스와이퍼 슬라이드</button>
+            <button class="code-tab" data-tab="slide">GSAP - TOP버튼</button>
+            <button class="code-tab" data-tab="signup">로그인 & 회원가입</button>
+            <button class="code-tab" data-tab="filter">필터</button>
+            <button class="code-tab" data-tab="qna">Q&A / 리뷰</button>
+          </div>
+
+          
+          <div class="code-tab-content active" id="swiper">
+            <h3>스와이퍼 슬라이드</h3>
+            <img src="./images/project/01.purea/code01-01.png" alt="스와이퍼 코드">
+            <p class="code-desc">자동 재생과 반복(loop) 기능으로 사용자가 자연스럽게 콘텐츠를 확인할 수 있으며,<br>
+              스크롤바와 드래그로 직접 슬라이드를 조작할 수도 있습니다.</p>
+            <img src="./images/project/01.purea/code01.png" alt="스와이퍼 코드">
+          </div>
+
+          <div class="code-tab-content" id="slide">
+            <h3>GSAP - TOP버튼</h3>
+            <img src="./images/project/01.purea/code02-01.png" alt="top버튼 코드">
+            <p class="code-desc">Top 버튼 클릭 시 GSAP 애니메이션으로 부드럽게 최상단으로 스크롤되도록 구현하여,<br>
+              사용자가 빠르게 페이지 상단으로 이동할 수 있도록 UX를 개선했습니다.</p>
+            <img src="./images/project/01.purea/code02.png" alt="top버튼 코드">
+          </div>
+
+          <div class="code-tab-content" id="signup">
+            <div class="login-section">
+              <h3>로그인</h3>
+              <img src="./images/project/01.purea/code03-01.png" alt="">
+              <p class="code-desc">회원/비회원 탭 전환 기능과 로그인 시 아이디 저장(localStorage)을 구현하여,<br>
+                사용자가 보다 편리하게 로그인할 수 있도록 UX를 개선했습니다.</p>
+              <img src="./images/project/01.purea/code03.png" alt="">
+
+              <img class="first" src="./images/project/01.purea/code04-01.png" alt="">
+              <p class="code-desc">게스트가 이름과 번호를 입력하면, 입력값을 확인하고 결과 페이지로 이동하도록 구현했습니다.</p>
+              <img class="big-img" src="./images/project/01.purea/code04.png" alt="">
+            </div>
+
+            <div class="divider"></div> 
+
+            <div class="signup-section">
+              <h3>회원가입</h3>
+              <img src="./images/project/01.purea/code05-01.png" alt="">
+              <p class="code-desc">이메일 입력 시 선택한 도메인에 따라 직접 입력 필드를 활성화/비활성화하여 사용성을 개선했습니다</p>
+              <img src="./images/project/01.purea/code05.png" alt="">
+
+
+              <img class="first" src="./images/project/01.purea/code06-01.png" alt="">
+              <p class="code-desc">다음 우편번호 API를 연동하여 주소 검색 시 자동 입력 및 포커스 이동을 구현했습니다.</p>
+              <img src="./images/project/01.purea/code06.png" alt="">
+
+              <img class="first" src="./images/project/01.purea/code07-01.png" alt="">
+              <p class="code-desc">전체 동의와 개별 약관 체크를 연동하여 사용자가 보다 직관적으로 약관을 선택할 수 있도록 구현했습니다.</p>
+              <img src="./images/project/01.purea/code07.png" alt="">
+            </div>
+          </div>
+
+
+          <div class="code-tab-content" id="filter">
+            <h3>필터</h3>
+            <img src="./images/project/01.purea/code08-01.png" alt="회원가입 코드 예시">
+            <p class="code-desc">사용자가 선택한 정렬 기준(기본순, 신상품, 가격순 등)에 따라 상품 목록을 실시간으로 정렬하고,<br>
+              페이지네이션도 함께 업데이트되도록 구현했습니다.</p>
+            <img class="big-img" src="./images/project/01.purea/code08.png" alt="회원가입 코드 예시">
+          </div>
+
+          <div class="code-tab-content" id="qna">
+            <div class="qna-section">
+              <h3>Q&A</h3>
+              <img class="big-img" src="./images/project/01.purea/code09-01.png" alt="Q&A 코드 예시">
+              <p class="code-desc">
+                사용자 문의 데이터를 서버에서 안전하게 fetch하여 화면에 바로 렌더링하고,<br>
+                에러 발생 시에도 빈 화면 처리로 안정성을 확보하는 기능을 구현했습니다.
+              </p>
+              <img src="./images/project/01.purea/code09.png" alt="Q&A 코드 예시">
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="review-section">
+              <h3>리뷰</h3>
+              <img class="big-img" src="./images/project/01.purea/code10-01.png" alt="리뷰 코드 예시">
+              <p class="code-desc">
+                리뷰 JSON을 불러와 화면에 렌더링하고, 사용자가 새 리뷰를 작성하면 즉시 DOM에 추가하고 초기화하는 기능
+              </p>
+              <img src="./images/project/01.purea/code10.png" alt="리뷰 코드 예시">
+
+              <img class="first" src="./images/project/01.purea/code11-01.png" alt="리뷰 코드 예시">
+              <p class="code-desc">
+                별점 필터 옵션 클릭 시 선택한 별점에 맞춰 리뷰를 화면에 표시하거나 초기화하는 기능
+              </p>
+              <img src="./images/project/01.purea/code11.png" alt="리뷰 코드 예시">
+            </div>
+          </div>
+
+
+        </div>
+      </div>
     </div>
+
+
+
+
 
 
     <!-- gallery -->
@@ -971,8 +1083,6 @@
         </div>
       </div>
     </div>
-
-
 
   </div>
 
